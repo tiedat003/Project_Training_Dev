@@ -1,55 +1,32 @@
-import { useCallback, useState } from "react";
-import { ILoginParams, ILoginValidation } from "../../../models/auth";
-import { validateLogin, validLogin } from "../utils";
-import { Box, TextField, Alert, FormControlLabel, Switch, Button } from "@mui/material"
-import { LoadingButton } from "@mui/lab"
-import {FormattedMessage} from "react-intl"
-interface Props {
-    onLogin(values: ILoginParams): void;
-    loading: boolean;
-    errorMessage: string;
-}
-const LoginForm = (props: Props) => {
-    const { onLogin, loading, errorMessage } = props;
-    const [formValues, setFormValues] = useState<ILoginParams>({ email: "", password: "", rememberMe: false })
-    const [validate, setValidate] = useState<ILoginValidation>()
-    const submit = useCallback((e: any) => {
-        e.preventDefault();
-        const validate = validateLogin(formValues);
+import React from "react";
+import LoginPage from "../pages/LoginPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-        setValidate(validate);
 
-        if (!validLogin(validate)) {
-            return;
-        }
-        onLogin(formValues)
-    }, [formValues, onLogin])
+const LoginForm = () => {
     return (
-        <Box component="form" width={1} maxWidth={"600px"} p={3} autoComplete="off" sx={{ display: "flex", flexDirection: "column", '& .MuiTextField-root': { width: '100%', pb: 2 }, '& .MuiFormControl-root': { pb: 2 }, "& .MuiAlert-root":{mb:2} }} noValidate onSubmit={submit}>
-            <TextField
-                required
-                label={!!validate?.email ? <FormattedMessage id={validate.email} /> : <FormattedMessage id="email" />}
-                type="email"
-                error={!!validate?.email}
-                value={formValues.email}
-                onChange={(e) => setFormValues({ ...formValues, email: e.target.value })}
-            />
-            <TextField
-                required
-                label={!!validate?.password ? <FormattedMessage id={validate.password} /> : <FormattedMessage id="password" />}
-                type="password"
-                autoComplete="on"
-                error={!!validate?.password}
-                value={formValues.password}
-                onChange={(e) => setFormValues({ ...formValues, password: e.target.value })}
-            />
-
-            <FormControlLabel control={<Switch checked={formValues.rememberMe} onChange={(e) => setFormValues({ ...formValues, rememberMe: !formValues.rememberMe })}/>} label={<FormattedMessage id="rememberMe" />} />
-            {errorMessage !== "" && <Alert severity="error">{errorMessage}</Alert>}
-            <Box width={1} display="flex" justifyContent="space-between" alignItems="center">
-                <LoadingButton variant="outlined" size="large" type="submit" loading={loading}><FormattedMessage id="login"/></LoadingButton>
-                <Button variant="text" href="/register"><FormattedMessage id="donthaveanaccount"/></Button>
-            </Box>
-        </Box>)
+        <form
+            style={{
+                padding: 20,
+                maxWidth: "500px",
+                border: "2px solid #8bb1e9",
+                margin: "50px",
+            }}>
+            <div className="mb-3">
+                <label htmlFor="loginFormEmail" className="form-label">Địa chỉ Email</label>
+                <input type="email" className="form-control" id="loginFormEmail" aria-describedby="emailHelp"></input>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="loginFormPassword" className="form-label">Mật khẩu</label>
+                <input type="password" className="form-control" id="loginFormPassword"></input>
+            </div>
+            <div className="mb-3 form-check">
+                <input type="checkbox" className="form-check-input" id="loginCheck"></input>
+                <label className="form-check-label" htmlFor="loginCheck">Lưu thông tin đăng nhập</label>
+            </div>
+            <button type="submit" className="btn btn-primary">Đăng nhập</button>
+        </form>
+    );
 }
-export default LoginForm
+
+export default LoginForm;
