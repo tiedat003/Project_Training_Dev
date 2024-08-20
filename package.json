@@ -21,6 +21,7 @@
     "axios": "^0.25.0",
     "bootstrap": "^5.3.3",
     "connected-react-router": "^6.9.2",
+    "formik": "^2.4.6",
     "history": "^4.10.1",
     "js-cookie": "^3.0.1",
     "mini-css-extract-plugin": "^2.5.3",

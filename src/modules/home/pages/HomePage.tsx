@@ -24,7 +24,7 @@ const HomePage = (props: Props) => {
     width={1}
     height="100vh" columns={2}><Grid container direction="row"
       justifyContent="center"
-      alignItems="center" width={1} maxWidth="300px" p={3} sx={{border: `2px solid ${blue["A200"]}`, borderRadius:"20px"}} columns={6}><Button variant='outlined' onClick={handleLogout}>Logout</Button></Grid></Grid>;
+      alignItems="center" width={1} maxWidth="300px" p={3} sx={{ border: `2px solid ${blue["A200"]}`, borderRadius: "20px" }} columns={6}><Button variant='outlined' onClick={handleLogout}>Logout</Button></Grid></Grid>;
 };
 
 export default HomePage;

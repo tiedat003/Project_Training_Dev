@@ -1,0 +1,16 @@
+form {
+    padding: 20px;
+    max-width: 500px;
+    border: 2px solid #8bb1e9;
+    margin: 100px;
+}
+
+.btn {
+    min-width: 160px;
+    display: inline;
+    margin-left: 40px;
+}
+
+.link {
+    outline: none;
+}

@@ -1,7 +1,7 @@
 import { Grid, Button } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { ROUTES } from "../../../configs/routes";
-import {FormattedMessage} from "react-intl"
+import { FormattedMessage } from "react-intl";
 
 const AuthPage = () => {
     return (
@@ -14,9 +14,9 @@ const AuthPage = () => {
             width={1}
         >
             <Grid container columns={6} width={1} justifyContent="space-evenly"
-                alignItems="center" maxWidth={"600px"} 
+                alignItems="center" maxWidth={"600px"}
                 p={3}
-                sx={{ backgroundColor: "white", border: `2px solid ${blue["A100"]}`, borderRadius:10 }}
+                sx={{ backgroundColor: "white", border: `2px solid ${blue["A100"]}`, borderRadius: 10 }}
             >
                 <Button size="large" variant="outlined" href={ROUTES.login}><FormattedMessage id="login" /></Button>
                 <Button size="large" variant="outlined" href={ROUTES.register}><FormattedMessage id="register" /></Button>

@@ -3,28 +3,28 @@ export interface ILoginParams {
     password: string;
     rememberMe: boolean;
 }
-export interface ILoginValidation{
-    email:string;
-    password:string;
+export interface ILoginValidation {
+    email: string;
+    password: string;
 }
 export interface IRegisterParams {
     email: string;
     password: string;
-    confirmPassword: string;
-    name:string;
-    gender:string;
-    region:string;
-    state:string;
+    repeatPassword: string;
+    name: string;
+    gender: string;
+    region: string;
+    state: string;
 }
 
-export interface IRegisterValidation { 
+export interface IRegisterValidation {
     email: string;
     password: string;
-    confirmPassword: string;
-    name:string;
-    gender:string;
-    region:string;
-    state:string;
+    repeatPassword: string;
+    // name: string;
+    // gender: string;
+    // region: string;
+    // state: string;
 }
 export interface ILocationParams {
     id: string | number;
@@ -34,7 +34,7 @@ export interface ILocationParams {
 }
 
 export interface ICapitalParams extends ILocationParams { }
-export interface IGenderParams{
+export interface IGenderParams {
     label: string;
     value: string;
 }
