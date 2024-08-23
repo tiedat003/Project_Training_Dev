@@ -6,14 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Form.css"
 import { FormattedMessage } from "react-intl";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { error } from "console";
-
+import { error, log } from "console";
+import InputComponent from "../../common/components/InputComponent";
 
 const RegisterForm = () => {
     const [formValues, setFormValues] = useState({
         email: '',
         password: '',
-        rePassword: '',
+        repeatPassword: '',
         name: ''
     });
 
@@ -46,37 +46,37 @@ const RegisterForm = () => {
                 setErrorEmail('')
             }
         } else {
-            setErrorEmail('Vui lòng nhập email');
+            setErrorEmail('');
         }
     }, [formValues.email]);
 
     // Validate Password
-    const [errorRePass, setErrorRePass] = useState('')
-    useEffect(() => {
-        if (formValues.rePassword) {
-            if (formValues.rePassword.length < 8) {
-                setErrorRePass('Vui lòng nhập đủ 8 kí tự');
-            } else {
-                setErrorRePass('');
-            }
-        } else {
-            setErrorRePass('Vui lòng nhập mật khẩu');
-        }
-    }, [formValues.rePassword]);
-
-    // Validate RePass
     const [errorPass, setErrorPass] = useState('')
     useEffect(() => {
         if (formValues.password) {
-            if (formValues.rePassword !== formValues.password) {
-                setErrorPass('Vui lòng nhập đúng mật khẩu');
+            if (formValues.password.length < 8) {
+                setErrorPass('Vui lòng nhập đủ 8 kí tự');
             } else {
-                setErrorPass('')
+                setErrorPass('');
             }
         } else {
-            setErrorPass('Vui lòng nhập lại mật khẩu');
+            setErrorPass('');
         }
     }, [formValues.password]);
+
+    // Validate RePass
+    const [errorRePass, setErrorRePass] = useState('')
+    useEffect(() => {
+        if (formValues.repeatPassword) {
+            if (formValues.password !== formValues.repeatPassword) {
+                setErrorRePass('Vui lòng nhập đúng mật khẩu');
+            } else {
+                setErrorRePass('')
+            }
+        } else {
+            setErrorRePass('');
+        }
+    }, [formValues.repeatPassword]);
 
     // Validate Name
     const [errorName, setErrorName] = useState('')
@@ -89,86 +89,101 @@ const RegisterForm = () => {
                 setErrorName('')
             }
         } else {
-            setErrorName('Vui lòng nhập họ và tên')
+            setErrorName('')
         }
     })
 
+    // Validate Form
+    const [errors, setErrors] = useState({})
+    const validateForm = () => {
+        const newError: any = {};
+        if (!formValues.email) newError.email = "Vui lòng nhập email"
+        if (!formValues.password) newError.password = "Vui lòng nhập mật khẩu"
+        if (!formValues.repeatPassword) newError.repeatPassword = "Vui lòng nhập lại mật khẩu"
+        if (!formValues.name) newError.name = "Vui lòng nhập họ và tên"
+        setErrors(newError)
+        return Object.keys(newError).length === 0;
+    }
+
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        if (validateForm()) {
+            console.log('Form submitted', formValues);
+        }
+    }
+
+    // const validate = () => {
+    //     let formErrors: any = {};
+    //     if (!formValues.email.trim()) {
+    //         formErrors.email = "Vui lòng nhập email.";
+    //     }
+    //     if (!formValues.password.trim()) {
+    //         formErrors.password = "Vui lòng nhập mật khẩu.";
+    //     }
+    //     if (!formValues.name.trim()) {
+    //         formErrors.name = "Vui lòng nhập tên.";
+    //     }
+    //     return formErrors;
+    // };
+
+    // const handleSubmit = (event: { preventDefault: () => void; }) => {
+    //     event.preventDefault();
+    //     const formErrors = validate();
+    //     if (Object.keys(formErrors).length > 0) {
+    //         setErrors(formErrors);
+    //     } else {
+    //         setErrors({});
+
+    //         console.log("Form submitted with values:", formValues);
+    //     }
+    // };
 
     return (
         <form>
             {/* Email */}
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                    <FormattedMessage id="email" />
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    value={formValues.email}
-                    onChange={handleInputChange}
-                ></input>
-                {errorEmail && <p style={{ color: "red" }}>{errorEmail}</p>}
-            </div>
+            <InputComponent
+                type='text'
+                value={formValues.email}
+                id='email'
+                inputChange={handleInputChange}
+                error={errorEmail} />
 
             {/* Password */}
-            <div className="mb-3">
-                <label htmlFor="rePassword" className="form-label" id="rePassword">
-                    <FormattedMessage id="password" />
-                </label>
-                <input
-                    type="password"
-                    className="form-control"
-                    id="rePassword"
-                    value={formValues.rePassword}
-                    onChange={handleInputChange}
-                    required
-                ></input>
-                {errorRePass && <p style={{ color: "red" }}>{errorRePass}</p>}
-            </div>
+            <InputComponent
+                type='password'
+                value={formValues.password}
+                id='password'
+                inputChange={handleInputChange}
+                error={errorPass} />
 
             {/* Repeat Password */}
-            <div className="mb-3">
-                <label htmlFor="password" className="form-label" id="password">
-                    <FormattedMessage id="repeatPassword" />
-                </label>
-                <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    value={formValues.password}
-                    onChange={handleInputChange}
-                    required
-                ></input>
-                {errorPass && <p style={{ color: "red" }}>{errorPass}</p>}
-            </div>
+            <InputComponent
+                type='password'
+                value={formValues.repeatPassword}
+                id='repeatPassword'
+                inputChange={handleInputChange}
+                error={errorRePass} />
 
             {/* Name */}
-            <div className="mb-3">
-                <label htmlFor="name" className="form-label" id="name">
-                    <FormattedMessage id="name" />
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    value={formValues.name}
-                    onChange={handleInputChange}
-                ></input>
-                {errorName && <p style={{ color: "red" }}>{errorName}</p>}
-            </div>
+            <InputComponent
+                type='text'
+                value={formValues.name}
+                id='name'
+                inputChange={handleInputChange}
+                error={errorName} />
 
             {/* Gender */}
             <div className="mb-3">
                 <label htmlFor="gender" className="form-label" id="gender">
                     <FormattedMessage id="gender" />
                 </label>
-                <select className="form-select form-select-sm" aria-label="Lagre select example">
-                    <option selected>--select an option--</option>
+                <select className="form-select form-select-sm" aria-label="Large select example">
+                    <option value=" " selected>--select an option--</option>
                     <option value="1">Nam</option>
                     <option value="2">Nữ</option>
                     <option value="3">Khác</option>
                 </select>
+                {/* {errorGender && <p style={{ color: "red" }}>{errorGender}</p>} */}
             </div>
 
             {/* Region */}
@@ -177,11 +192,12 @@ const RegisterForm = () => {
                     <FormattedMessage id="region" />
                 </label>
                 <select className="form-select form-select-sm" aria-label="Large select example">
-                    <option selected>--select an option--</option>
+                    <option value=" " selected>--select an option--</option>
                     <option value="1">1</option>
                     <option value="2">12</option>
                     <option value="3">123</option>
                 </select>
+                {/* {errorRegion && <p style={{ color: "red" }}>{errorRegion}</p>} */}
             </div>
 
             {/* State */}
@@ -190,22 +206,23 @@ const RegisterForm = () => {
                     <FormattedMessage id="state" />
                 </label>
                 <select className="form-select form-select-sm" aria-label="Large select example">
-                    <option selected>--select an option--</option>
+                    <option value=" " selected>--select an option--</option>
                     <option value="1">3</option>
                     <option value="2">32</option>
                     <option value="3">321</option>
-
                 </select>
+                {/* {errorState && <p style={{ color: "red" }}>{errorState}</p>} */}
             </div>
 
-            <Link to='/dashboard'>
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={handleSave}
-                ><FormattedMessage id="register" />
-                </button>
-            </Link>
+            {/* Button */}
+            <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSave}
+                onSubmit={handleSubmit}
+                disabled={!formValues.email || !formValues.password || !formValues.repeatPassword || !formValues.name}
+            ><FormattedMessage id="register" />
+            </button>
 
             <Link to='/login'>
                 <button

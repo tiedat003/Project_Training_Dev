@@ -6,8 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FormattedMessage } from "react-intl";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./Form.css"
-import { validateLogin, validLogin } from "../utils";
-import { log } from "console";
+import InputComponent from "../../common/components/InputComponent";
 
 export interface LoginParams {
     email: string;
@@ -26,7 +25,6 @@ export interface LoginValidation {
 // }
 
 const LoginForm = () => {
-    // const { onLogin, loading, errorMessage } = props;
     const [formValues, setFormValues] = useState({
         email: '',
         password: ''
@@ -56,10 +54,6 @@ const LoginForm = () => {
         console.log(userEmail)
 
     }, [])
-    useEffect(() => {
-
-        console.log(formValues.email)
-    }, [formValues.email])
 
     const rememberCheck = useRef<HTMLInputElement>(null)
     const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
@@ -75,35 +69,75 @@ const LoginForm = () => {
         }
     }
 
+    // Validate Email
+    const [errorEmail, setErrorEmail] = useState('')
+    useEffect(() => {
+        if (formValues.email) {
+            const validateEmail = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!validateEmail.test(formValues.email)) {
+                setErrorEmail('Nhập đúng định dạng email');
+            } else {
+                setErrorEmail('')
+            }
+        } else {
+            setErrorEmail('');
+        }
+    }, [formValues.email]);
+
+    // Validate Password
+    const [errorPass, setErrorPass] = useState('')
+    useEffect(() => {
+        if (formValues.password) {
+            if (formValues.password.length < 8) {
+                setErrorPass('Vui lòng nhập đủ 8 kí tự');
+            } else {
+                setErrorPass('');
+            }
+        } else {
+            setErrorPass('');
+        }
+    }, [formValues.password]);
+
+    // Validate Form
+    const [errors, setErrors] = useState({})
+    const validateForm = () => {
+        const newError: any = {};
+        if (!formValues.email) newError.email = "Vui lòng nhập email"
+        if (!formValues.password) newError.password = "Vui lòng nhập mật khẩu"
+        setErrors(newError)
+        return Object.keys(newError).length === 0;
+    }
+
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        debugger
+        if (validateForm()) {
+            console.log('Form submitted', formValues);
+        }
+    }
+
     return (
 
         <form>
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label" id="email">
-                    <FormattedMessage id="email" />
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    value={formValues.email}
-                    onChange={handleInputChange}
-                ></input>
-            </div>
+            {/* Email */}
+            <InputComponent
+                type='text'
+                value={formValues.email}
+                id='email'
+                inputChange={handleInputChange}
+                error={errorEmail}
+            />
 
-            <div className="mb-3">
-                <label htmlFor="password" className="form-label" id="password">
-                    <FormattedMessage id="password" />
-                </label>
-                <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    value={formValues.password}
-                    onChange={handleInputChange}
-                ></input>
-            </div>
+            {/* Password */}
+            <InputComponent
+                type='password'
+                value={formValues.password}
+                id='password'
+                inputChange={handleInputChange}
+                error={errorPass}
+            />
 
+            {/* RememberMe */}
             <div className="mb-3 form-check">
                 <input
                     type="checkbox"
@@ -119,16 +153,15 @@ const LoginForm = () => {
                 </label>
             </div>
 
-            <Link to='/dashboard'>
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={handleSave}
-                ><FormattedMessage id="login" />
-                </button>
-                {/* <Route path="/dashboard" component={DashboardForm} /> */}
-            </Link>
-
+            {/* Button */}
+            <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSave}
+                onSubmit={handleSubmit}
+                disabled={!formValues.email || !formValues.password}
+            ><FormattedMessage id="login" />
+            </button>
 
             <Link to="/register">
                 <button
