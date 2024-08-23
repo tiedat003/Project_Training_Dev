@@ -112,32 +112,6 @@ const RegisterForm = () => {
         }
     }
 
-    // const validate = () => {
-    //     let formErrors: any = {};
-    //     if (!formValues.email.trim()) {
-    //         formErrors.email = "Vui lòng nhập email.";
-    //     }
-    //     if (!formValues.password.trim()) {
-    //         formErrors.password = "Vui lòng nhập mật khẩu.";
-    //     }
-    //     if (!formValues.name.trim()) {
-    //         formErrors.name = "Vui lòng nhập tên.";
-    //     }
-    //     return formErrors;
-    // };
-
-    // const handleSubmit = (event: { preventDefault: () => void; }) => {
-    //     event.preventDefault();
-    //     const formErrors = validate();
-    //     if (Object.keys(formErrors).length > 0) {
-    //         setErrors(formErrors);
-    //     } else {
-    //         setErrors({});
-
-    //         console.log("Form submitted with values:", formValues);
-    //     }
-    // };
-
     return (
         <form>
             {/* Email */}
