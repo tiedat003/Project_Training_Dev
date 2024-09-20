@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IAlbum } from "../../../models/album";
 import "../component/dashboard.css"
 
-const AlbumList: React.FC = () => {
+const AlbumList = () => {
     const [albums] = useState([])
     const dispatch = useDispatch();
     const albumsData = useSelector((state: dashboardState) => state.albumsData.albums);
