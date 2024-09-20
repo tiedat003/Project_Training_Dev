@@ -45,8 +45,9 @@ const DashboardPage = () => {
     // };
 
     return (
-        <> {AlbumList} </>
-
+        <div>
+            < AlbumList />
+        </div>
     )
 
 }
