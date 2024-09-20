@@ -72,7 +72,6 @@ const AlbumList: React.FC = () => {
 
     return (
         <div className="list-group">
-            <>{DashboardPage}</>
             <button
                 type="submit"
                 className="btn btn-primary">
@@ -121,7 +120,6 @@ const AlbumList: React.FC = () => {
                                 ) : (
                                     <div>
                                         {album.title}
-
                                     </div>
                                 )}
                             </li>
