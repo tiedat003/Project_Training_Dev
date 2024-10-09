@@ -15,10 +15,11 @@ function DashboardState(props: { type: string; value: string; onChange: Function
         </>
     )
 }
-
-interface Album {
+export interface Album {
     id: number;
     title: string;
+    url: string;
+    thumbnailUrl: string;
 }
 
 interface AlbumEditorProps {
@@ -28,6 +29,7 @@ interface AlbumEditorProps {
 
 const AlbumEditor: React.FC<AlbumEditorProps> = ({ album, onTitleChange }) => {
     const [newTitle, setNewTitle] = useState(album.title);
+    const [newThumbnailUrl, setNewThumbnailUrl] = useState(album.thumbnailUrl)
 
     // Hàm xử lý khi người dùng thay đổi title
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,15 +45,7 @@ const AlbumEditor: React.FC<AlbumEditorProps> = ({ album, onTitleChange }) => {
 
     return (
         <div>
-            <input
-                type='text'
-                className="form-control"
-                placeholder='Text'
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-                value={newTitle}
-                onChange={onChangeTitle}
-            />
+
 
         </div>
     );

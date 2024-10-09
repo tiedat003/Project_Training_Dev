@@ -4,7 +4,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-export interface dashboardState {
+export interface DashboardState {
     [x: string]: any;
     album?: IAlbum[];
 }
@@ -17,7 +17,7 @@ const actions = { setListAlbums };
 type Action = ActionType<typeof actions>;
 const store = createStore(reducer, applyMiddleware(thunk));
 
-export default function reducer(state: dashboardState = {}, action: Action) {
+export default function reducer(state: DashboardState = {}, action: Action) {
     switch (action.type) {
         case getType(setListAlbums):
             return {

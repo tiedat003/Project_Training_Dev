@@ -8,9 +8,10 @@ import ProtectedRoute from "./modules/common/components/ProtectedRouter";
 const AuthPage = lazy(() => import("./modules/auth/pages/AuthPage"));
 const LoginPage = lazy(() => import('./modules/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('./modules/auth/pages/RegisterPage'));
-const HomePage = lazy(() => import("./modules/home/pages/HomePage"))
-const ContactPage = lazy(() => import("./modules/home/pages/ContactPage"))
-const DashboardPage = lazy(() => import("./modules/dashboard/pages/DashboardPage"))
+const HomePage = lazy(() => import("./modules/home/pages/HomePage"));
+const ContactPage = lazy(() => import("./modules/home/pages/ContactPage"));
+const DashboardPage = lazy(() => import("./modules/dashboard/pages/DashboardPage"));
+const AlbumPage = lazy(() => import("./modules/album/AlbumPage"))
 
 const LoadingPage = () => (<Grid container
     direction="row"
@@ -30,6 +31,7 @@ export const Routes = (props: Props) => {
                 <ProtectedRoute path={ROUTES.home} component={HomePage} />
                 <Route path={ROUTES.contact} component={ContactPage} />
                 <Route path={ROUTES.dashboard} component={DashboardPage} />
+                <Route path={ROUTES.album} component={AlbumPage} />
                 <Route path="/" component={AuthPage} />
             </Switch>
         </Suspense>
