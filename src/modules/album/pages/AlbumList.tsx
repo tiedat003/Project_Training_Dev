@@ -58,8 +58,8 @@ const AlbumList = () => {
 
     return (
         <div className='container'>
-            <button onClick={handleSubmit}>Submit</button>
-            <button onClick={handleReset}>Reset</button>
+            <button onClick={handleSubmit} disabled={true}>Submit</button>
+            <button onClick={handleReset} disabled>Reset</button>
             <div className='box'>
                 {editablePhotos.map((photo) => (
                     <div className='content' key={photo.id}>

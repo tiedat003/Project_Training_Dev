@@ -8,7 +8,7 @@ import "../component/dashboard.css"
 const AlbumList: React.FC = () => {
     const [albums] = useState([])
     const dispatch = useDispatch();
-    const albumsData = useSelector((state: dashboardState) => state.albumsData.albums);
+    // const albumsData = useSelector((state: dashboardState) => state.albumsData.albums);
 
     const handleAlbumChanged = (album: { id: any; }) => {
         const albumToEdit = albums.find((item: { id: any; }) => item.id === album.id);
@@ -26,6 +26,14 @@ const AlbumList: React.FC = () => {
     const [newTitle, setNewTitle] = useState('');
 
     const handleSubmit = () => { alert('Submit success') }
+
+    // function handleReset(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    //     throw new Error("Function not implemented.");
+    // }
+
+    // function handleConfirm(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    //     throw new Error("Function not implemented.");
+    // }
 
     return (
         <div className="list-group">
@@ -71,7 +79,7 @@ const AlbumList: React.FC = () => {
                                             value={newTitle}
                                             onChange={(e) => setNewTitle(e.target.value)}
                                         />
-                                        <button onClick={handleConfirm}>Confirm</button>
+                                        {/* <button onClick={handleConfirm}>Confirm</button> */}
                                     </div>
                                 ) : (
                                     <div>
@@ -82,7 +90,7 @@ const AlbumList: React.FC = () => {
                             </li>
                         ))}
                     </ul>
-                    <button onClick={handleReset}>Reset</button>
+                    {/* <button onClick={handleReset}>Reset</button> */}
                 </div>
             </div>
         </div>
