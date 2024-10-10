@@ -43,7 +43,7 @@ const AlbumList = () => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleConfirm = () => {
         setPhotos(editablePhotos);
     };
 
@@ -58,7 +58,7 @@ const AlbumList = () => {
 
     return (
         <div className='container'>
-            <button onClick={handleSubmit} >Submit</button>
+            <button onClick={handleConfirm} >Confirm Update</button>
             <button onClick={handleReset} >Reset</button>
             <div className='box'>
                 {editablePhotos.map((photo) => (
